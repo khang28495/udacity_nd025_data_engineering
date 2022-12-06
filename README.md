@@ -52,7 +52,7 @@ cd app
 python run.py
 ```
 
-4. Go to http://0.0.0.0:3001/
+4. Go to http://0.0.0.0:3000/
 
 
 ## 4. File Descriptions <a name='file_descriptions'></a>

@@ -43,27 +43,44 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    # extract data needed for message categories bar chart - second graph
+    category_names = sorted(df.columns[-36:], key=lambda category : df[category].sum(), reverse=True)
+    category_counts = [round(df[category].sum()/df.shape[0] * 100 , 2) for category in category_names] #calculate the percentage of each categories
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
+    # create visuals
     graphs = [
+        # FIRST GRAPH
         {
             'data': [
                 Bar(
-                    x=genre_names,
-                    y=genre_counts
+                    y=genre_names, 
+                    x=genre_counts, 
+                    orientation='h'
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
+                'title': 'The Number Of Messages By Genres'
+            }
+        },
+        
+        # SECOND GRAPH
+        {
+            'data': [
+                Bar(
+                    x=[" ".join([word.capitalize() for word in category.split("_")]) for category in category_names], #format category names
+                    y=category_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'The Percentage Of Occurrence Of Message Categories',
                 'yaxis': {
-                    'title': "Count"
-                },
-                'xaxis': {
-                    'title': "Genre"
+                    'title': "Percent (%)"
                 }
             }
-        }
+        },
     ]
     
     # encode plotly graphs in JSON
