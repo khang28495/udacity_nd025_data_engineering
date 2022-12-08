@@ -46,6 +46,9 @@ def clean_data(df):
     output_df = df.drop(columns=['categories'])
     output_df = pd.concat([output_df, categories], axis=1)
     
+    #dropping related observations
+    output_df = df.drop(columns=['related'])
+    
     # drop duplicates
     output_df.drop_duplicates(inplace=True)   
     return output_df
